@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+@theme {
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-secondary-500: #ec4899;
+  --color-secondary-600: #db2777;
+  --color-vibrant-start: #ff0080;
+  --color-vibrant-end: #7928ca;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base custom utility components to be used in Loksetu */
+@layer components {
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .glass-panel {
+      background-color: rgba(20, 20, 20, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+  }
+
+  .fluid-gradient-bg {
+    background: linear-gradient(135deg, #ff0080, #8b5cf6, #0ea5e9);
+  }
+  
+  .fluid-gradient-text {
+    background: linear-gradient(135deg, #ff0080, #7928ca);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
