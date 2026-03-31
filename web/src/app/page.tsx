@@ -27,15 +27,15 @@ export default function Home() {
       >
         <div className="flex items-center justify-between w-full max-w-5xl glass-panel rounded-full px-6 py-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full fluid-gradient-bg flex items-center justify-center text-white font-extrabold text-lg shadow-lg">
-              L
+            <div className="w-8 h-8 rounded-full overflow-hidden">
+              <img src="/logo.png" alt="Loksetu" className="w-full h-full object-cover" />
             </div>
             <span className="font-bold text-xl tracking-tight">Loksetu</span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/login" className="text-sm font-semibold hover:opacity-70 transition-opacity">Sign in</Link>
-            <Link href="/report" className="text-sm font-bold bg-black dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-transform shadow-xl">
-              Report Now
+            <Link href="/login" className="text-sm font-bold bg-black dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-transform shadow-xl">
+              Sign Up
             </Link>
           </div>
         </div>

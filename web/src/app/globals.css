@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #000000;
 }
 
-@theme {
+:root {
   --color-primary-500: #8b5cf6;
   --color-primary-600: #7c3aed;
   --color-secondary-500: #ec4899;
@@ -18,11 +20,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-  }
+:root.dark {
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 body {
@@ -39,24 +39,27 @@ body {
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.6);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
-  
-  @media (prefers-color-scheme: dark) {
-    .glass-panel {
-      background-color: rgba(20, 20, 20, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-    }
+
+  :root.dark .glass-panel {
+    background-color: #121212;
+    border: 1px solid #262626;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .fluid-gradient-bg {
     background: linear-gradient(135deg, #ff0080, #8b5cf6, #0ea5e9);
   }
-  
+
   .fluid-gradient-text {
     background: linear-gradient(135deg, #ff0080, #7928ca);
+    background-clip: text;
     -webkit-background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
+    display: inline-block;
   }
 }

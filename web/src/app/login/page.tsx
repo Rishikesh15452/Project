@@ -149,10 +149,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col justify-center items-center p-6 overflow-hidden">
+    <div className="relative min-h-screen bg-zinc-50 dark:bg-black flex flex-col justify-center items-center p-6 overflow-hidden">
       {/* Background Orbs */}
-      <motion.div animate={{ rotate: 360, scale: [1, 1.1, 1] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute -top-32 -left-32 w-[600px] h-[600px] fluid-gradient-bg rounded-full blur-[140px] opacity-20 dark:opacity-30 mix-blend-screen" />
-      <motion.div animate={{ rotate: -360, scale: [1, 1.2, 1] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="absolute -bottom-32 -right-32 w-[600px] h-[600px] fluid-gradient-bg rounded-full blur-[140px] opacity-20 dark:opacity-30 mix-blend-screen" />
+      <motion.div animate={{ rotate: 360, scale: [1, 1.1, 1] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute -top-32 -left-32 w-[600px] h-[600px] fluid-gradient-bg rounded-full blur-[140px] opacity-20 mix-blend-screen dark:hidden" />
+      <motion.div animate={{ rotate: -360, scale: [1, 1.2, 1] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="absolute -bottom-32 -right-32 w-[600px] h-[600px] fluid-gradient-bg rounded-full blur-[140px] opacity-20 mix-blend-screen dark:hidden" />
 
       <div className="w-full max-w-md z-10">
         <Link href="/" className="inline-flex items-center text-zinc-500 hover:text-foreground mb-8 transition-colors font-medium hover:-translate-x-1 duration-200">
@@ -162,8 +162,8 @@ export default function LoginPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-panel rounded-[3rem] p-10 relative overflow-hidden">
           
           <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 fluid-gradient-bg rounded-[1.5rem] flex items-center justify-center shadow-lg">
-              <span className="text-white text-3xl font-black">L</span>
+            <div className="w-16 h-16 rounded-[1.5rem] overflow-hidden shadow-lg">
+              <img src="/logo.png" alt="Loksetu" className="w-full h-full object-cover" />
             </div>
           </div>
           
@@ -175,16 +175,16 @@ export default function LoginPage() {
           </p>
 
           {/* Role Choice Toggle */}
-          <div className="flex bg-zinc-200/50 dark:bg-zinc-800/50 backdrop-blur-md rounded-3xl p-1.5 mb-8">
+          <div className="flex bg-zinc-200/50 dark:bg-black backdrop-blur-md rounded-3xl p-1.5 mb-8">
             <button 
               onClick={() => { setActiveRole("citizen"); setIsError(""); setOtpSent(false); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-bold rounded-[1.5rem] transition-all ${activeRole === 'citizen' ? 'glass-panel shadow-md text-foreground border-white/40' : 'text-zinc-500 hover:text-foreground'}`}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-bold rounded-[1.5rem] transition-all ${activeRole === 'citizen' ? 'glass-panel shadow-md text-foreground border-white/40 dark:bg-[#262626] dark:text-[#ffffff] dark:border-[#333333]' : 'text-zinc-500 hover:text-foreground dark:text-[#717171] dark:hover:text-[#FAFAFA]'}`}
             >
               <UserCircle2 className="w-4 h-4" /> Citizen
             </button>
             <button 
               onClick={() => { setActiveRole("admin"); setIsError(""); setOtpSent(false); }}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-bold rounded-[1.5rem] transition-all ${activeRole === 'admin' ? 'fluid-gradient-bg text-white shadow-md' : 'text-zinc-500 hover:text-foreground'}`}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-bold rounded-[1.5rem] transition-all ${activeRole === 'admin' ? 'fluid-gradient-bg text-white shadow-md dark:bg-white dark:text-black' : 'text-zinc-500 hover:text-foreground dark:text-[#717171] dark:hover:text-[#FAFAFA]'}`}
             >
               <ShieldAlert className="w-4 h-4" /> Official
             </button>
@@ -200,9 +200,9 @@ export default function LoginPage() {
                transition={{ duration: 0.2 }}
              >
                 {activeRole === "citizen" ? (
-                  /* Citizen Flow: Strictly Google Accounts */
+                  /* Citizen Flow: Google Accounts & Standard Accounts */
                   <div className="flex flex-col gap-4">
-                     <button onClick={() => handleOAuth('google')} className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:bg-white hover:shadow-xl dark:hover:bg-zinc-800 transition-all font-bold text-base active:scale-95 group">
+                     <button type="button" onClick={() => handleOAuth('google')} className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl bg-zinc-100 dark:bg-[#121212] border border-zinc-200 dark:border-[#262626] hover:bg-white hover:shadow-xl dark:hover:bg-[#262626] transition-all font-bold text-base active:scale-95 group">
                        <svg className="w-6 h-6 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -211,23 +211,63 @@ export default function LoginPage() {
                        </svg>
                        {isSignUp ? "Sign Up with Google" : "Continue with Google"}
                      </button>
-                     <p className="text-xs text-center text-zinc-500 font-medium px-4 mt-2">
-                       Citizens rely completely on verified Google accounts for secure identity mapping.
-                     </p>
+                     
+                     <div className="flex items-center gap-3 w-full py-2">
+                       <div className="flex-1 h-px bg-zinc-200 dark:bg-[#262626]" />
+                       <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">OR</span>
+                       <div className="flex-1 h-px bg-zinc-200 dark:bg-[#262626]" />
+                     </div>
+
+                     <form onSubmit={handleEmailAuth} className="space-y-4">
+                       {isError && (
+                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-4 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded-xl text-sm font-bold text-center">
+                           {isError}
+                         </motion.div>
+                       )}
+                       <div className="relative group">
+                         <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
+                         <input type="email" placeholder="Your Email address" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium" />
+                       </div>
+                       <div className="relative group">
+                         <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
+                         <input 
+                           type={showPassword ? "text" : "password"} 
+                           placeholder={isSignUp ? "Create a Password" : "Your Password"} 
+                           required 
+                           value={password} 
+                           onChange={(e) => setPassword(e.target.value)} 
+                           className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-12 outline-none transition-all text-base font-medium" 
+                         />
+                         <button 
+                           type="button"
+                           onClick={() => setShowPassword(!showPassword)}
+                           className="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-foreground transition-colors p-1"
+                         >
+                           {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                         </button>
+                       </div>
+                       <button type="submit" disabled={isLoading} className="w-full bg-foreground text-background font-black text-lg py-5 rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-2xl disabled:opacity-70 group mt-2">
+                         {isLoading ? (
+                           <div className="w-6 h-6 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                         ) : (
+                           <>{isSignUp ? "Generate Credentials" : "Enter Securely"} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
+                         )}
+                       </button>
+                     </form>
                   </div>
                 ) : (
                   /* Admin Flow: Legacy Identity (Email / Phone) */
                   <>
-                    <div className="flex bg-zinc-200/30 dark:bg-zinc-900/50 rounded-[1.25rem] p-1 mb-6">
+                    <div className="flex bg-zinc-200/30 dark:bg-black rounded-[1.25rem] p-1 mb-6">
                       <button 
                         onClick={() => { setLoginMethod("email"); setIsError(""); setOtpSent(false); }}
-                        className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${loginMethod === 'email' ? 'glass-panel text-foreground shadow-sm' : 'text-zinc-500 hover:text-foreground'}`}
+                        className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${loginMethod === 'email' ? 'glass-panel text-foreground shadow-sm dark:bg-[#262626] dark:text-[#ffffff] dark:border-[#333333]' : 'text-zinc-500 hover:text-foreground dark:text-[#717171] dark:hover:text-[#FAFAFA]'}`}
                       >
                         Admin Mail
                       </button>
                       <button 
                         onClick={() => { setLoginMethod("phone"); setIsError(""); setOtpSent(false); }}
-                        className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${loginMethod === 'phone' ? 'glass-panel text-foreground shadow-sm' : 'text-zinc-500 hover:text-foreground'}`}
+                        className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${loginMethod === 'phone' ? 'glass-panel text-foreground shadow-sm dark:bg-[#262626] dark:text-[#ffffff] dark:border-[#333333]' : 'text-zinc-500 hover:text-foreground dark:text-[#717171] dark:hover:text-[#FAFAFA]'}`}
                       >
                         Mobile Terminal
                       </button>
@@ -243,18 +283,18 @@ export default function LoginPage() {
                       {loginMethod === "email" ? (
                         <>
                           <div className="relative group">
-                            <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 transition-colors w-5 h-5" />
-                            <input type="email" placeholder="Official Mail" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-zinc-100 dark:bg-zinc-900 border border-transparent focus:border-pink-500/50 rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium" />
+                            <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
+                            <input type="email" placeholder="Official Mail" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium" />
                           </div>
                           <div className="relative group">
-                            <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 transition-colors w-5 h-5" />
+                            <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
                             <input 
                               type={showPassword ? "text" : "password"} 
                               placeholder="Terminal Passkey" 
                               required 
                               value={password} 
                               onChange={(e) => setPassword(e.target.value)} 
-                              className="w-full bg-zinc-100 dark:bg-zinc-900 border border-transparent focus:border-pink-500/50 rounded-2xl py-4 pl-14 pr-12 outline-none transition-all text-base font-medium" 
+                              className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-12 outline-none transition-all text-base font-medium" 
                             />
                             <button 
                               type="button"
@@ -268,13 +308,13 @@ export default function LoginPage() {
                       ) : (
                         <>
                           <div className="relative group">
-                            <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 transition-colors w-5 h-5" />
-                            <input type="tel" disabled={otpSent} placeholder="Mobile Array (+91...)" required value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-zinc-100 dark:bg-zinc-900 border border-transparent focus:border-pink-500/50 rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium disabled:opacity-50" />
+                            <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
+                            <input type="tel" disabled={otpSent} placeholder="Mobile Array (+91...)" required value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium disabled:opacity-50" />
                           </div>
                           {otpSent && (
                             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="relative group overflow-hidden">
-                              <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 transition-colors w-5 h-5" />
-                              <input type="text" placeholder="6-digit Overpass Code" required value={otp} onChange={(e) => setOtp(e.target.value)} className="w-full bg-zinc-100 dark:bg-zinc-900 border border-transparent focus:border-pink-500/50 rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium" />
+                              <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-pink-500 dark:group-focus-within:text-[#FAFAFA] transition-colors w-5 h-5" />
+                              <input type="text" placeholder="6-digit Overpass Code" required value={otp} onChange={(e) => setOtp(e.target.value)} className="w-full bg-zinc-100 dark:bg-[#000000] border border-transparent focus:border-pink-500/50 dark:border-[#262626] dark:focus:border-[#717171] rounded-2xl py-4 pl-14 pr-4 outline-none transition-all text-base font-medium" />
                             </motion.div>
                           )}
                         </>

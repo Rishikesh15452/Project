@@ -1,68 +1,60 @@
 import React from 'react';
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
-
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { Tabs } from 'expo-router';
+import { useColorScheme, TouchableOpacity, Text, Image, View } from 'react-native';
+import { supabase } from '../../lib/supabase';
+import { useRouter } from 'expo-router';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const isDark = useColorScheme() === 'dark';
+  const router = useRouter();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#f97316', // Saffron Theme Color
-        tabBarInactiveTintColor: '#6b7280',
-        headerShown: useClientOnlyValue(false, true),
+        tabBarActiveTintColor: '#ec4899',
+        tabBarInactiveTintColor: '#888',
         tabBarStyle: {
+          backgroundColor: isDark ? '#000' : '#fff',
+          borderTopColor: isDark ? '#1a1a1a' : '#f3f4f6',
           borderTopWidth: 1,
-          borderTopColor: '#f3f4f6',
-          elevation: 5,
-        }
+          elevation: 0,
+        },
+        headerStyle: {
+          backgroundColor: isDark ? '#000' : '#fff',
+          shadowColor: 'transparent',
+          elevation: 0,
+          borderBottomWidth: 1,
+          borderBottomColor: isDark ? '#1a1a1a' : '#f3f4f6',
+        },
+        headerTintColor: isDark ? '#fff' : '#111',
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Civic Feed',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{ ios: 'list.bullet', android: 'list', web: 'list' }}
-              tintColor={color}
-              size={24}
-            />
+          title: 'My Issues',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>📋</Text>,
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('../../assets/images/icon.png')} style={{ width: 28, height: 28, borderRadius: 8 }} />
+              <Text style={{ fontSize: 18, fontWeight: '900', color: isDark ? '#fff' : '#111' }}>Loksetu</Text>
+            </View>
           ),
-          headerStyle: { backgroundColor: '#f97316' },
-          headerTintColor: '#fff',
           headerRight: () => (
-            <Link href="/login" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'person.crop.circle', android: 'person', web: 'person' }}
-                    size={28}
-                    tintColor="#fff"
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+            <TouchableOpacity
+              onPress={async () => { await supabase.auth.signOut(); router.replace('/login'); }}
+              style={{ marginRight: 16, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 10, backgroundColor: 'rgba(239,68,68,0.1)' }}>
+              <Text style={{ fontSize: 12, fontWeight: '800', color: '#ef4444' }}>Sign Out</Text>
+            </TouchableOpacity>
           ),
         }}
-      />      <Tabs.Screen
+      />
+      <Tabs.Screen
         name="report"
         options={{
-          title: 'Report Issue',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{ ios: 'camera.fill', android: 'camera', web: 'camera' }}
-              tintColor={color}
-              size={24}
-            />
-          ),
-          headerStyle: { backgroundColor: '#f97316' },
-          headerTintColor: '#fff',
+          title: 'Report',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>📷</Text>,
+          headerTitle: 'Report Issue',
+          headerTitleStyle: { fontWeight: '900' },
         }}
       />
     </Tabs>
